@@ -5,6 +5,7 @@
 #include <array>
 #include <deque>
 #include <string>
+#include <regex>
 
 constexpr double M_PI = 3.14159265358979323846;
 

@@ -1,6 +1,7 @@
 #pragma once
 #include "Holder.h"
 #include "RAWHolder.h"
+#include "../HolderConstructionException.h"
 
 class RAWHolder;
 
@@ -62,7 +63,7 @@ public:
     /// Constructor taking RAW type of file
     /// </summary>
     /// <param name="other">RAW sound file to be copied</param>
-    WAVHolder(RAWHolder& other);
+    WAVHolder(RAWHolder& other, uint16_t bytesPerSample = 2, uint16_t audioFormat = 1);
 
     /// <summary>
     /// Copy constructor of this class with resize
@@ -122,4 +123,27 @@ public:
     /// <param name="index">Position of the sample</param>
     /// <param name="value">New value of the sample</param>
     void setAt(uint32_t index, usedType value) override;
+
+    template <typename T>
+    const T at(uint64_t index) const
+    {
+        unsigned char typeBytes[sizeof(T)];
+        for (uint32_t i = 0; i < sizeof(T); i++)
+            typeBytes[i] = Samples[index * sizeof(T) + i];
+        T value;
+        std::memcpy(&value, typeBytes, sizeof(T));
+        return value;
+    }
+
+    template <typename T>
+    const T at(uint32_t index, uint8_t typeSize) const
+    {
+        unsigned char typeBytes[typeSize];
+        for (uint8_t i = 0; i < typeSize; i++)
+            typeBytes[i] = Samples[index * static_cast<uint32_t>(typeSize) + i];
+        int64_t value;
+        std::memcpy(&value, typeBytes, typeSize);
+        return T(value);
+    }
 };
+

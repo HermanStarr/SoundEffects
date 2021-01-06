@@ -141,6 +141,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Circuit\Circuit.h" />
+    <ClInclude Include="HolderConstructionException.h" />
     <ClInclude Include="InProgramConsole\Compiled.h" />
     <ClInclude Include="InProgramConsole\ConsoleCommands.h" />
     <ClInclude Include="Elements\Element.h" />
@@ -170,6 +171,7 @@
     <ClCompile Include="Effects\ReverberationEffect.cpp" />
     <ClCompile Include="Elements\Filters\AllPassFilter.cpp" />
     <ClCompile Include="Elements\Filters\FIRFilter.cpp" />
+    <ClCompile Include="HolderConstructionException.cpp" />
     <ClCompile Include="Holders\RAWHolder.cpp" />
     <ClCompile Include="Holders\WAVHolder.cpp" />
     <ClCompile Include="InProgramConsole\ConsoleCommands.cpp" />

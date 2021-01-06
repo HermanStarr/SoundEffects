@@ -75,6 +75,9 @@
     <ClInclude Include="InProgramConsole\Compiled.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="HolderConstructionException.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Effects\ReverberationEffect.cpp">
@@ -111,6 +114,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="InProgramConsole\ConsoleCommands.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HolderConstructionException.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

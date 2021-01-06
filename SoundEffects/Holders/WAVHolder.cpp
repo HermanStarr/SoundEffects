@@ -26,7 +26,7 @@ WAVHolder::WAVHolder(const std::string& path)
     }
     else
     {
-        Samples = nullptr;
+        throw(HolderConstructionException("Input file at: " + path  + " could not be opened"));
     }
 }
 
@@ -68,13 +68,13 @@ WAVHolder::WAVHolder(const WAVHolder& other)
     }
 }
 
-WAVHolder::WAVHolder(RAWHolder& other)
+WAVHolder::WAVHolder(RAWHolder& other, uint16_t bytesPerSample, uint16_t audioFormat)
 {
     _Header.ChunkID[0] = 'R';
     _Header.ChunkID[1] = 'I';
     _Header.ChunkID[2] = 'F';
     _Header.ChunkID[3] = 'F';
-    _Header.ChunkSize = 36 + other.getSamplesNumber() * other.getNumChannels() * sizeof(usedType);
+    _Header.ChunkSize = (uint32_t)36 + other.getSamplesNumber() * static_cast<uint32_t>(other.getNumChannels()) * bytesPerSample;
     _Header.Format[0] = 'W';
     _Header.Format[1] = 'A';
     _Header.Format[2] = 'V';
@@ -84,12 +84,12 @@ WAVHolder::WAVHolder(RAWHolder& other)
     _Header.Subchunk1ID[2] = 't';
     _Header.Subchunk1ID[3] = ' ';
     _Header.Subchunk1Size = 16;
-    _Header.AudioFormat = 1;
+    _Header.AudioFormat = audioFormat;
     _Header.NumChannels = other.getNumChannels();;
     _Header.SampleRate = other.getSampleRate();
-    _Header.ByteRate = _Header.SampleRate * _Header.NumChannels * sizeof(usedType);
-    _Header.BlockAlign = _Header.NumChannels * sizeof(usedType);
-    _Header.BitsPerSample = sizeof(usedType) * 8;
+    _Header.ByteRate = _Header.SampleRate * _Header.NumChannels * bytesPerSample;
+    _Header.BlockAlign = _Header.NumChannels * bytesPerSample;
+    _Header.BitsPerSample = bytesPerSample << 3;
     _Header.Subchunk2ID[0] = 'd';
     _Header.Subchunk2ID[1] = 'a';
     _Header.Subchunk2ID[2] = 't';
@@ -210,5 +210,7 @@ void WAVHolder::setAt(uint32_t index, usedType value)
 {
     Samples[index] = value;
 }
+
+
 
 

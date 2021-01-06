@@ -13,7 +13,7 @@ struct Command {
 
 class ConsoleCommands {
 private:
-	std::vector<Command*> basicComands;
+	std::vector<Command*> baseComands;
 	std::deque<Command*> orderedCommands;
 	std::string cppCode;
 	std::ifstream console;
@@ -24,7 +24,6 @@ private:
 public:
 	ConsoleCommands();
 	ConsoleCommands(std::string inputFilePath);
-	ConsoleCommands(std::ifstream inputFileStream);
 	~ConsoleCommands();
 
 private:

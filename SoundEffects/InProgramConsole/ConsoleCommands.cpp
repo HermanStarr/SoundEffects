@@ -12,28 +12,49 @@ void ConsoleCommands::linkCommandTree()
 
 ConsoleCommands::ConsoleCommands()
 {
-
+	console = std::ifstream(COMMANDS_FILE);
+	fillCommandsFromFile();
+	linkCommandTree();
 }
 
 ConsoleCommands::ConsoleCommands(std::string inputFilePath)
 {
-}
-
-ConsoleCommands::ConsoleCommands(std::ifstream inputFileStream)
-{
+	console = std::ifstream(inputFilePath);
+	fillCommandsFromFile();
+	linkCommandTree();
 }
 
 ConsoleCommands::~ConsoleCommands()
 {
+	for (Command* command : baseComands)
+		delete command;
+
 }
 
-Command* ConsoleCommands::copyCommand(Command*)
+Command* ConsoleCommands::copyCommand(Command* copied)
 {
-	return nullptr;
+	Command* command = new Command;
+	command->isEditable = copied->isEditable;
+	command->commandTree = copied->commandTree;
+	command->name = copied->name;
+	command->command = copied->command;
+	command->cppCodeEquivalent = copied->cppCodeEquivalent;
 }
 
 void ConsoleCommands::readPseudoCode()
 {
+	for (std::string line; getline(console, line);)
+	{
+
+		line.erase(remove_if(line.begin(), line.end(), isspace), line.end());
+		while (!line.empty())
+		{
+			if (std::regex_match(line, std::regex("\((.*?)\).*")))
+			{
+
+			}
+		}
+	}
 }
 
 void ConsoleCommands::createCppCode()
