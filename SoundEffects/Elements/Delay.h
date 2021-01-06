@@ -10,7 +10,7 @@ class Delay : public Element
 	/// <summary>
 	/// deque of previous values
 	/// </summary>
-	std::deque<float> delay;
+	std::deque<double> delay;
 	/// <summary>
 	/// Size of the delay in samples
 	/// </summary>
@@ -41,24 +41,32 @@ public:
 	/// </summary>
 	/// <param name="new_sample">A new sample to be inserted in the beginning</param>
 	/// <returns>Last, discarded value of the deque</returns>
-	float execute(float new_sample) override;
+	int32_t execute(int32_t new_sample) override;
+
 	/// <summary>
 	/// Adds a new sample in the beginning of the deck and discards sample in the back of the deque
 	/// </summary>
 	/// <param name="new_sample">A new sample to be inserted in the beginning</param>
 	/// <returns>Last, discarded value of the deque</returns>
-	usedType execute(usedType new_sample) override;
+	float execute(float new_sample) override;
+
+	/// <summary>
+	/// Perform action on given sample
+	/// </summary>
+	/// <param name="input">Sample being passed</param>
+	/// <returns>Refactored value</returns>
+	double execute(double input) override;
 
 	/// <summary>
 	/// Gets value in the front of the deque
 	/// </summary>
 	/// <returns>Sample in the front of the deque</returns>
-	float getFront();
+	double getFront();
 	/// <summary>
 	/// Gets value in the back of the deque
 	/// </summary>
 	/// <returns>Sample in the back of the deque</returns>
-	float getBack();
+	double getBack();
 
 	/// <summary>
 	/// reset all the values in the deque
@@ -70,7 +78,7 @@ public:
 	/// </summary>
 	/// <param name="index">Position of the sample in the deque</param>
 	/// <returns>Sample in the given position</returns>
-	float operator [](uint32_t index) const;
+	double operator [](uint32_t index) const;
 
 };
 

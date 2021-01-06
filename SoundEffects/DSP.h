@@ -5,12 +5,6 @@
 
 
 /// <summary>
-/// Makes reverberation effect on given wav or raw file
-/// </summary>
-/// <param name="holder"></param>
-void makeReverberation(Holder& holder);
-
-/// <summary>
 /// Function merges two audio files with a given offset and volume modifier
 /// </summary>
 /// <param name="merger">A target audio class</param>
@@ -45,9 +39,8 @@ void makeTripleEcho(Holder& merger, Holder& mergee, float delay);
 void makeInfiniteEcho(Holder& merger, Holder& mergee, float delay, float modifier = 1.f);
 
 
-///	<summary>
-/// Function checks an extension of a file
+/// <summary>
+/// Makes reverberation effect on given wav or raw file
 /// </summary>
-/// <param name="path">Path to the given file</param>
-/// <returns>Flag corresponding to the extension found</returns>
-int checkExtension(const std::string& path);
+/// <param name="holder"></param>
+void makeReverberation(Holder& holder);

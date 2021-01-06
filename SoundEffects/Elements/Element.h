@@ -12,7 +12,7 @@ public:
 	/// </summary>
 	/// <param name="input">Sample being passed</param>
 	/// <returns>Refactored value</returns>
-	virtual usedType execute(usedType input) = 0;
+	virtual int32_t execute(int32_t input) = 0;
 
 	/// <summary>
 	/// Perform action on given sample
@@ -20,6 +20,13 @@ public:
 	/// <param name="input">Sample being passed</param>
 	/// <returns>Refactored value</returns>
 	virtual float execute(float input) = 0;
+
+	/// <summary>
+	/// Perform action on given sample
+	/// </summary>
+	/// <param name="input">Sample being passed</param>
+	/// <returns>Refactored value</returns>
+	virtual double execute(double input) = 0;
 
 	/// <summary>
 	/// Gets delay value

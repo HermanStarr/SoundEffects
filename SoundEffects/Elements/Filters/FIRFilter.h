@@ -10,7 +10,7 @@ class FIRFilter : public Element
 	/// <summary>
 	/// FIR filter taps
 	/// </summary>
-	std::vector<float> taps;
+	std::vector<double> taps;
 
 	/// <summary>
 	/// Delay element of the filter
@@ -22,7 +22,7 @@ public:
 	/// Constructor
 	/// </summary>
 	/// <param name="taps">Taps vector</param>
-	FIRFilter(std::vector<float> taps);
+	FIRFilter(std::vector<double> taps);
 	~FIRFilter() = default;
 
 	/// <summary>
@@ -30,7 +30,7 @@ public:
 	/// </summary>
 	/// <param name="input">Sample being passed</param>
 	/// <returns>Filtered value</returns>
-	usedType execute(usedType input) override;
+	int32_t execute(int32_t input) override;
 
 	/// <summary>
 	/// Perform filtration on given sample
@@ -38,6 +38,13 @@ public:
 	/// <param name="input">Sample being passed</param>
 	/// <returns>Filtered value</returns>
 	float execute(float input) override;
+
+	/// <summary>
+	/// Perform filtration on given sample
+	/// </summary>
+	/// <param name="input">Sample being passed</param>
+	/// <returns>Filtered value</returns>
+	double execute(double input) override;
 
 	/// <summary>
 	/// Gets delay value
@@ -55,7 +62,7 @@ public:
 	/// Get taps vector reference
 	/// </summary>
 	/// <returns>Taps vector reference</returns>
-	const std::vector<float>& getTaps() const;
+	const std::vector<double>& getTaps() const;
 
 	/// <summary>
 	/// reset delay element

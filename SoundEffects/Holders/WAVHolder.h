@@ -1,7 +1,7 @@
 #pragma once
 #include "Holder.h"
 #include "RAWHolder.h"
-#include "../HolderConstructionException.h"
+#include "../Exceptions/HolderConstructionException.h"
 
 class RAWHolder;
 
@@ -43,7 +43,7 @@ class WAVHolder : public Holder{
     /// <summary>
     /// Samples array
     /// </summary>
-    usedType* Samples;
+    unsigned char* Samples;
 
 public:
 
@@ -81,7 +81,19 @@ public:
     /// Samples NUmber getter
     /// </summary>
     /// <returns>SamplesNumber</returns>
-    uint32_t getSamplesNumber() override;
+    const uint32_t getSamplesNumber() const override;
+
+    /// <summary>
+    /// Gets bits per sample
+    /// </summary>
+    /// <returns>Number of bits per single sample</returns>
+    const uint16_t getBitsPerSample() const override;
+
+    /// <summary>
+    /// Gets compression mode of the file
+    /// </summary>
+    /// <returns>Compression mode</returns>
+    const uint16_t getCompressionCode() const override;
 
     /// <summary>
     /// Gets delay in number of samples
@@ -104,46 +116,100 @@ public:
     bool writeToFile(const std::string& path) override;
 
     /// <summary>
-    /// Overloads [] operator
+    /// Gets byte from Samples at give index
     /// </summary>
-    /// <param name="index">Index of a sample in an array</param>
-    /// <returns>A reference to a sample in the Sample array</returns>
-    const usedType& operator [](std::uint32_t index) const override;
+    /// <param name="index">Index of position</param>
+    /// <returns>Byte at given index</returns>
+    const unsigned char at(uint32_t index) const override;
 
     /// <summary>
-    /// Gets sample at
+    /// Gets integer type
     /// </summary>
-    /// <param name="index">Position of the sample</param>
-    /// <returns>Sample at the position</returns>
-    const usedType at(uint32_t index) const override;
+    /// <param name="index">Position relative to size of type</param>
+    /// <param name="type">Integer type of the sample</param>
+    /// <returns>Typefull of bytes at given realtive index</returns>
+    const uint8_t atUint8_t(uint32_t index) const override;
+
+    /// <summary>
+    /// Gets integer type
+    /// </summary>
+    /// <param name="index">Position relative to size of type</param>
+    /// <param name="type">Integer type of the sample</param>
+    /// <returns>Typefull of bytes at given realtive index</returns>
+    const int16_t atInt16_t(uint32_t index) const override;
+
+    /// <summary>
+    /// Gets integer type
+    /// </summary>
+    /// <param name="index">Position relative to size of type</param>
+    /// <param name="type">Integer type of the sample</param>
+    /// <returns>Typefull of bytes at given realtive index</returns>
+    const int24_t atInt24_t(uint32_t index) const override;
+
+    /// <summary>
+    /// Gets integer type
+    /// </summary>
+    /// <param name="index">Position relative to size of type</param>
+    /// <param name="type">Integer type of the sample</param>
+    /// <returns>Typefull of bytes at given realtive index</returns>
+    const int32_t atInt32_t(uint32_t index) const override;
+
+    /// <summary>
+    /// Gets float value from given sample index. Translates from byte array
+    /// </summary>
+    /// <param name="index">Position relative to the size of the type</param>
+    /// <param name="type">Floating point type of the sample</param>
+    /// <returns>Typefull of bytes at given realtive index</returns>
+    const float atFloat(uint32_t index) const override;
+
+    /// <summary>
+    /// Gets float value from given sample index. Translates from byte array
+    /// </summary>
+    /// <param name="index">Position relative to the size of the type</param>
+    /// <param name="type">Floating point type of the sample</param>
+    /// <returns>Typefull of bytes at given realtive index</returns>
+    const double atDouble(uint32_t index) const override;
 
     /// <summary>
     /// Sets sample at
     /// </summary>
-    /// <param name="index">Position of the sample</param>
+    /// <param name="index">Position relative of the sample</param>
     /// <param name="value">New value of the sample</param>
-    void setAt(uint32_t index, usedType value) override;
+    void setAt(uint32_t index, uint8_t value) override;
 
-    template <typename T>
-    const T at(uint64_t index) const
-    {
-        unsigned char typeBytes[sizeof(T)];
-        for (uint32_t i = 0; i < sizeof(T); i++)
-            typeBytes[i] = Samples[index * sizeof(T) + i];
-        T value;
-        std::memcpy(&value, typeBytes, sizeof(T));
-        return value;
-    }
+    /// <summary>
+    /// Sets sample at
+    /// </summary>
+    /// <param name="index">Position relative of the sample</param>
+    /// <param name="value">New value of the sample</param>
+    void setAt(uint32_t index, int16_t value) override;
 
-    template <typename T>
-    const T at(uint32_t index, uint8_t typeSize) const
-    {
-        unsigned char typeBytes[typeSize];
-        for (uint8_t i = 0; i < typeSize; i++)
-            typeBytes[i] = Samples[index * static_cast<uint32_t>(typeSize) + i];
-        int64_t value;
-        std::memcpy(&value, typeBytes, typeSize);
-        return T(value);
-    }
+    /// <summary>
+    /// Sets sample at
+    /// </summary>
+    /// <param name="index">Position relative of the sample</param>
+    /// <param name="value">New value of the sample</param>
+    void setAt(uint32_t index, int24_t value) override;
+
+    /// <summary>
+    /// Sets sample at
+    /// </summary>
+    /// <param name="index">Position relative of the sample</param>
+    /// <param name="value">New value of the sample</param>
+    void setAt(uint32_t index, int32_t value) override;
+
+    /// <summary>
+    /// Sets sample at
+    /// </summary>
+    /// <param name="index">Position relative of the sample</param>
+    /// <param name="value">New value of the sample</param>
+    void setAt(uint32_t index, float value) override;
+
+    /// <summary>
+    /// Sets sample at
+    /// </summary>
+    /// <param name="index">Position relative of the sample</param>
+    /// <param name="value">New value of the sample</param>
+    void setAt(uint32_t index, double value) override;
 };
 

@@ -1,6 +1,6 @@
 #include "Delay.h"
 
-Delay::Delay(uint32_t delay) : delay(std::deque<float>(delay, 0.f)), delaySize(delay)
+Delay::Delay(uint32_t delay) : delay(std::deque<double>(delay, 0.f)), delaySize(delay)
 {
 }
 
@@ -19,39 +19,46 @@ void Delay::setDelay(uint32_t size)
 	delay.resize(size);
 }
 
+int32_t Delay::execute(int32_t new_sample)
+{
+	float tmp = static_cast<float>(delay.back());
+	delay.pop_back();
+	delay.push_front(static_cast<double>(new_sample));
+	return static_cast<int32_t>(tmp);
+}
 
 float Delay::execute(float new_sample)
 {
-	float tmp = delay.back();
+	float tmp = static_cast<float>(delay.back());
 	delay.pop_back();
-	delay.push_front(new_sample);
+	delay.push_front(static_cast<double>(new_sample));
 	return tmp;
 }
 
-usedType Delay::execute(usedType new_sample)
+double Delay::execute(double new_sample)
 {
-	float tmp = delay.back();
+	double tmp = delay.back();
 	delay.pop_back();
 	delay.push_front(new_sample);
 	return tmp;
 }
 
-float Delay::getFront()
+double Delay::getFront()
 {
 	return delay.front();
 }
 
-float Delay::getBack()
+double Delay::getBack()
 {
 	return delay.back();
 }
 
 void Delay::reset()
 {
-	delay = std::deque<float>(delaySize, 0.f);
+	delay = std::deque<double>(delaySize, 0.f);
 }
 
-float Delay::operator[](uint32_t index) const
+double Delay::operator[](uint32_t index) const
 {
 	return delay.at(index);
 }

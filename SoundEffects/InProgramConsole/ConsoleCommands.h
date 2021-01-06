@@ -4,7 +4,7 @@
 #include "Compiled.h"
 
 struct Command {
-	bool isEditable;
+	bool isEditable = false;
 	std::vector<Command*> commandTree;
 	std::string name;
 	std::string command;
