@@ -21,12 +21,12 @@ class Circuit
 	/// <summary>
 	/// Gain from circuit feedback
 	/// </summary>
-	float feedbackGain;
+	double feedbackGain;
 
 	/// <summary>
 	/// Certain vriable by which the input value is multiplied by
 	/// </summary>
-	float variable;
+	double variable;
 
 public:
 
@@ -35,7 +35,7 @@ public:
 	/// </summary>
 	/// <param name="variable">sets the variable</param>
 	/// <param name="feedbackGain">setd the feedback gain</param>
-	Circuit(float variable = 1.f, float feedbackGain = 0.2f);
+	Circuit(double variable = 1.0, double feedbackGain = 0.2);
 
 	
 	~Circuit() = default;
@@ -53,6 +53,15 @@ public:
 		std::unique_ptr<Element> new_unique_element{ new_element };
 		elements.emplace_back(std::move(new_unique_element));
 	}
+
+	/// <summary>
+	/// Gets element of a given type
+	/// </summary>
+	/// <typeparam name="SomeElement">Element type</typeparam>
+	/// <param name="index">Index at which the element resides</param>
+	/// <returns>Pointer to given element</returns>
+	template <typename SomeElement>
+	const SomeElement& getElement(uint32_t index) const;
 
 	/// <summary>
 	/// Remove element at given index
@@ -94,25 +103,28 @@ public:
 	void setDelay(uint32_t value);
 
 	/// <summary>
-	/// Gets element of a given type
-	/// </summary>
-	/// <typeparam name="SomeElement">Element type</typeparam>
-	/// <param name="index">Index at which the element resides</param>
-	/// <returns>Pointer to given element</returns>
-	template <typename SomeElement>
-	const SomeElement& getElement(uint32_t index) const;
-
-	/// <summary>
 	/// Gets and sets feedbackGain
 	/// </summary>
 	/// <returns>feedbackGain reference</returns>
-	const float& getFeedbackGain() const;
+	const double getFeedbackGain() const;
+
+	void setFeedbackGain(double feedbackGain);
 
 	/// <summary>
 	/// Gets and sets variable
 	/// </summary>
 	/// <returns>variable reference</returns>
-	const float& getVariable() const;
+	const double getVariable() const;
+
+	const void setVariable(double variable);
+
+	/// <summary>
+	/// Refactors input by every element in the circuit by given number of times
+	/// </summary>
+	/// <param name="input">Input sample</param>
+	/// <param name="iterator">Number of times being refactored</param>
+	/// <returns>output value</returns>
+	int32_t performCircuit(int32_t input, uint32_t iterator = 1);
 
 	/// <summary>
 	/// Refactors input by every element in the circuit by given number of times
@@ -123,11 +135,19 @@ public:
 	float performCircuit(float input, uint32_t iterator = 1);
 
 	/// <summary>
+	/// Refactors input by every element in the circuit by given number of times
+	/// </summary>
+	/// <param name="input">Input sample</param>
+	/// <param name="iterator">Number of times being refactored</param>
+	/// <returns>output value</returns>
+	double performCircuit(double input, uint32_t iterator = 1);
+
+	/// <summary>
 	/// Gets previous sample at position index
 	/// </summary>
 	/// <param name="index">Position of searched sample</param>
 	/// <returns>Sample at given index</returns>
-	float operator [](uint32_t index);
+	const double operator [](uint32_t index) const;
 
 
 };

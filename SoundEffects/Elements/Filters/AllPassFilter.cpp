@@ -5,21 +5,32 @@ AllPassFilter::AllPassFilter(uint32_t delay, float gain) : gain(gain), delayElem
 
 }
 
-usedType AllPassFilter::execute(usedType input)
+int32_t AllPassFilter::execute(int32_t input)
 {
-	float tmp = delayElement.execute(input + gain * delayElement.getBack());
-	return -gain * delayElement.getFront() + tmp;
+	float tmp = static_cast<float>(delayElement.execute(input + gain * delayElement.getBack()));
+	return static_cast<int32_t>(-gain * static_cast<float>(delayElement.getFront()) + tmp);
 }
 
 float AllPassFilter::execute(float input)
 {
-	float tmp = delayElement.execute(input + gain * delayElement.getBack());
+	float tmp = static_cast<float>(delayElement.execute(input + gain * delayElement.getBack()));
+	return -gain * static_cast<float>(delayElement.getFront()) + tmp;
+}
+
+double AllPassFilter::execute(double input)
+{
+	double tmp = delayElement.execute(input + gain * delayElement.getBack());
 	return -gain * delayElement.getFront() + tmp;
 }
 
-const float& AllPassFilter::getGain() const
+const float AllPassFilter::getGain() const
 {
 	return gain;
+}
+
+void AllPassFilter::setGain(float newGain)
+{
+	gain = newGain;
 }
 
 uint32_t AllPassFilter::getDelay() const

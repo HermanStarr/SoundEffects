@@ -21,7 +21,7 @@ public:
 	/// </summary>
 	/// <param name="input">Sample being passed</param>
 	/// <returns>Filtered value</returns>
-	usedType execute(usedType input) override;
+	int32_t execute(int32_t input) override;
 
 	/// <summary>
 	/// Perform filtration on given sample
@@ -29,6 +29,13 @@ public:
 	/// <param name="input">Sample being passed</param>
 	/// <returns>Filtered value</returns>
 	float execute(float input) override;
+
+	/// <summary>
+	/// Perform filtration on given sample
+	/// </summary>
+	/// <param name="input">Sample being passed</param>
+	/// <returns>Filtered value</returns>
+	double execute(double input) override;
 
 
 private:
@@ -41,7 +48,13 @@ public:
 	/// Gets and sets gain of the filter
 	/// </summary>
 	/// <returns>Gain value</returns>
-	const float& getGain() const;
+	const float getGain() const;
+
+	/// <summary>
+	/// Sets gain
+	/// </summary>
+	/// <param name="newGain">New value of gain</param>
+	void setGain(float newGain);
 
 public:
 	/// <summary>

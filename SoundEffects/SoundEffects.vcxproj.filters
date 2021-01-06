@@ -75,7 +75,10 @@
     <ClInclude Include="InProgramConsole\Compiled.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="HolderConstructionException.h">
+    <ClInclude Include="SoundGenerator\Wave.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Exceptions\HolderConstructionException.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -116,7 +119,10 @@
     <ClCompile Include="InProgramConsole\ConsoleCommands.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="HolderConstructionException.cpp">
+    <ClCompile Include="SoundGenerator\Wave.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Exceptions\HolderConstructionException.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

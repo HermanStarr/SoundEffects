@@ -39,6 +39,7 @@ Command* ConsoleCommands::copyCommand(Command* copied)
 	command->name = copied->name;
 	command->command = copied->command;
 	command->cppCodeEquivalent = copied->cppCodeEquivalent;
+	return command;
 }
 
 void ConsoleCommands::readPseudoCode()
@@ -49,10 +50,7 @@ void ConsoleCommands::readPseudoCode()
 		line.erase(remove_if(line.begin(), line.end(), isspace), line.end());
 		while (!line.empty())
 		{
-			if (std::regex_match(line, std::regex("\((.*?)\).*")))
-			{
 
-			}
 		}
 	}
 }

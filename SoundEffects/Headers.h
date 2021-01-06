@@ -15,4 +15,4 @@ constexpr float ONE_SIXTH = 0.16666666f;
 
 constexpr const char* COMMANDS_FILE = "../Resources/Commands.txt";;
 
-using usedType = int16_t;
+using int24_t = unsigned; //TODO
