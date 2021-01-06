@@ -68,6 +68,44 @@ WAVHolder::WAVHolder(const WAVHolder& other)
     }
 }
 
+WAVHolder::WAVHolder(RAWHolder& other)
+{
+    _Header.ChunkID[0] = 'R';
+    _Header.ChunkID[1] = 'I';
+    _Header.ChunkID[2] = 'F';
+    _Header.ChunkID[3] = 'F';
+    _Header.ChunkSize = 36 + other.getSamplesNumber() * other.getNumChannels() * sizeof(usedType);
+    _Header.Format[0] = 'W';
+    _Header.Format[1] = 'A';
+    _Header.Format[2] = 'V';
+    _Header.Format[3] = 'E';
+    _Header.Subchunk1ID[0] = 'f';
+    _Header.Subchunk1ID[1] = 'm';
+    _Header.Subchunk1ID[2] = 't';
+    _Header.Subchunk1ID[3] = ' ';
+    _Header.Subchunk1Size = 16;
+    _Header.AudioFormat = 1;
+    _Header.NumChannels = other.getNumChannels();;
+    _Header.SampleRate = other.getSampleRate();
+    _Header.ByteRate = _Header.SampleRate * _Header.NumChannels * sizeof(usedType);
+    _Header.BlockAlign = _Header.NumChannels * sizeof(usedType);
+    _Header.BitsPerSample = sizeof(usedType) * 8;
+    _Header.Subchunk2ID[0] = 'd';
+    _Header.Subchunk2ID[1] = 'a';
+    _Header.Subchunk2ID[2] = 't';
+    _Header.Subchunk2ID[3] = 'a';
+    _Header.Subchunk2Size = _Header.ChunkSize - 36;
+
+    SamplesNumber = other.getSamplesNumber();
+    Samples = new usedType[SamplesNumber];
+
+    for (uint32_t i = 0; i < SamplesNumber; i++)
+    {
+        Samples[i] = other.at(i);
+    }
+}
+
+
 WAVHolder::WAVHolder(const WAVHolder& other, uint32_t resize)
 {
     _Header.ChunkID[0] = other._Header.ChunkID[0];
@@ -113,7 +151,7 @@ WAVHolder::WAVHolder(const WAVHolder& other, uint32_t resize)
 WAVHolder::~WAVHolder()
 {
     if (Samples != nullptr)
-        delete Samples;
+        delete[] Samples;
 }
 
 uint32_t WAVHolder::getSamplesNumber()
@@ -158,9 +196,19 @@ bool WAVHolder::writeToFile(const std::string& path)
     return false;
 }
 
-usedType& WAVHolder::operator[](std::uint32_t index) const
+const usedType& WAVHolder::operator[](std::uint32_t index) const
 {
     return Samples[index % SamplesNumber];
+}
+
+const usedType WAVHolder::at(uint32_t index) const
+{
+    return Samples[index];
+}
+
+void WAVHolder::setAt(uint32_t index, usedType value)
+{
+    Samples[index] = value;
 }
 
 

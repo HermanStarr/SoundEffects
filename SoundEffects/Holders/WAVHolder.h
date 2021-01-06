@@ -1,5 +1,8 @@
 #pragma once
 #include "Holder.h"
+#include "RAWHolder.h"
+
+class RAWHolder;
 
 /// <summary>
 /// Class containing WAV file and allowing manipulation of it
@@ -56,6 +59,12 @@ public:
     WAVHolder(const WAVHolder& other);
 
     /// <summary>
+    /// Constructor taking RAW type of file
+    /// </summary>
+    /// <param name="other">RAW sound file to be copied</param>
+    WAVHolder(RAWHolder& other);
+
+    /// <summary>
     /// Copy constructor of this class with resize
     /// </summary>
     /// <param name="other">Copied instance of a class</param>
@@ -98,6 +107,19 @@ public:
     /// </summary>
     /// <param name="index">Index of a sample in an array</param>
     /// <returns>A reference to a sample in the Sample array</returns>
-    usedType& operator [](std::uint32_t index) const override;
+    const usedType& operator [](std::uint32_t index) const override;
 
+    /// <summary>
+    /// Gets sample at
+    /// </summary>
+    /// <param name="index">Position of the sample</param>
+    /// <returns>Sample at the position</returns>
+    const usedType at(uint32_t index) const override;
+
+    /// <summary>
+    /// Sets sample at
+    /// </summary>
+    /// <param name="index">Position of the sample</param>
+    /// <param name="value">New value of the sample</param>
+    void setAt(uint32_t index, usedType value) override;
 };

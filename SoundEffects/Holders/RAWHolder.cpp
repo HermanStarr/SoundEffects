@@ -43,6 +43,16 @@ RAWHolder::RAWHolder(const RAWHolder& other)
     }
 }
 
+
+RAWHolder::RAWHolder(int number_of_channels, uint32_t sample_rate, float duration)
+{
+    NumChannels = number_of_channels;
+    SampleRate = sample_rate;
+    FileSize = SampleRate * NumChannels * sizeof(usedType) * duration;
+    SamplesNumber = FileSize / sizeof(usedType);
+    Samples = new usedType[SamplesNumber];
+}
+
 RAWHolder::RAWHolder(const RAWHolder& other, uint32_t resize)
 {
     NumChannels = other.NumChannels;
@@ -64,7 +74,7 @@ RAWHolder::RAWHolder(const RAWHolder& other, uint32_t resize)
 RAWHolder::~RAWHolder()
 {
     if (Samples != nullptr)
-        delete Samples;
+        delete[] Samples;
 }
 
 uint32_t RAWHolder::getSamplesNumber()
@@ -82,6 +92,16 @@ float RAWHolder::getDuration()
     return (float)SamplesNumber / SampleRate / NumChannels;
 }
 
+uint16_t RAWHolder::getNumChannels()
+{
+    return NumChannels;
+}
+
+uint32_t RAWHolder::getSampleRate()
+{
+    return SampleRate;
+}
+
 bool RAWHolder::writeToFile(const std::string& path)
 {
     std::ofstream output;
@@ -95,7 +115,17 @@ bool RAWHolder::writeToFile(const std::string& path)
     return false;
 }
 
-usedType& RAWHolder::operator[](std::uint32_t index) const
+const usedType& RAWHolder::operator[](std::uint32_t index) const
 {
     return Samples[index % SamplesNumber];
+}
+
+const usedType RAWHolder::at(uint32_t index) const
+{
+    return Samples[index];
+}
+
+void RAWHolder::setAt(uint32_t index, usedType value)
+{
+    Samples[index] = value;
 }

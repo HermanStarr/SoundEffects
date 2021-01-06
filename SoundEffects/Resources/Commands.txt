@@ -1,0 +1,21 @@
+a1:forall->a1;a4;b1;c1
+a4:if->c2
+a5:else->a1;a4;b2;c1
+b1:endfor->b1;b2;d1
+b2:endif->a5;b1;b2;d1
+c1:var->c11
+c11:*->c3
+c2:(*)->a1;a4;b2;c1
+c3::*;->a1;a4;b1;b2
+d1:->a1;a4
+
+t1:a1->for(uint32_t i = 0; i < static_cast<uint32_t>(samples_per_tone); i++) {
+t2:a4->if
+t3:a5->else {
+t4:b1->}
+t5:b2->}
+t6:c1->array[
+t7:c11->c11]
+t8:c2->(c2){
+t9:c3->=c3;
+t10:x->static_cast<float>(i) / samples_per_tone

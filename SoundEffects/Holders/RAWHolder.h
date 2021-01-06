@@ -1,5 +1,6 @@
 #pragma once
 #include "Holder.h"
+#include "WAVHolder.h"
 
 /// <summary>
 /// Class containing RAW audio file and allowing manipulation of it
@@ -25,6 +26,9 @@ class RAWHolder : public Holder{
     /// </summary>
     uint32_t FileSize = 0;
 
+    /// <summary>
+    /// Sound samples
+    /// </summary>
     usedType* Samples;
 public:
 
@@ -41,6 +45,14 @@ public:
     /// </summary>
     /// <param name="other">Copied instance of a class</param>
     RAWHolder(const RAWHolder& other);
+
+    /// <summary>
+    /// Constructor for newly created sound file
+    /// </summary>
+    /// <param name="number_of_channels">Number of channels</param>
+    /// <param name="sample_rate">Sample rate of the file</param>
+    /// <param name="duration"Duration of file in seconds></param>
+    RAWHolder(int number_of_channels, uint32_t sample_rate, float duration);
 
     /// <summary>
     /// Copy constructor of this class with resize
@@ -74,6 +86,18 @@ public:
     float getDuration();
 
     /// <summary>
+    /// Gets number of channels
+    /// </summary>
+    /// <returns>Number of channels</returns>
+    uint16_t getNumChannels();
+
+    /// <summary>
+    /// Gets sample rate
+    /// </summary>
+    /// <returns>Sample Rate of the file</returns>
+    uint32_t getSampleRate();
+
+    /// <summary>
     /// Write to an audio file the contents of this class
     /// </summary>
     /// <param name="path">Path to an audio file</param>
@@ -85,5 +109,19 @@ public:
     /// </summary>
     /// <param name="index">Index of a sample in an array</param>
     /// <returns>A reference to a sample in the Sample array</returns>
-    usedType& operator [](std::uint32_t index) const override;
+    const usedType& operator [](std::uint32_t index) const override;
+
+    /// <summary>
+    /// Gets sample at
+    /// </summary>
+    /// <param name="index">Position of the sample</param>
+    /// <returns>Sample at the position</returns>
+    const usedType at(uint32_t index) const override;
+
+    /// <summary>
+    /// Sets sample at
+    /// </summary>
+    /// <param name="index">Position of the sample</param>
+    /// <param name="value">New value of the sample</param>
+    void setAt(uint32_t index, usedType value) override;
 };

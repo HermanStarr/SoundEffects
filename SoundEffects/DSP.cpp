@@ -1,7 +1,12 @@
 #include "DSP.h"
 
+void makeReverberation(Holder& holder)
+{
+    ReverberationEffect reverb(holder);
+    reverb.init();
+}
 
-void mergeTwoSounds(WAVHolder& merger, WAVHolder& mergee, uint32_t offset, float modifier)
+void mergeTwoSounds(Holder& merger, Holder& mergee, uint32_t offset, float modifier)
 {
     uint32_t size = mergee.getSamplesNumber() < merger.getSamplesNumber() - offset ? mergee.getSamplesNumber() : merger.getSamplesNumber() - offset;
     if (offset > merger.getSamplesNumber())
@@ -9,53 +14,25 @@ void mergeTwoSounds(WAVHolder& merger, WAVHolder& mergee, uint32_t offset, float
 
     for (uint32_t i = 0; i < size; i++)
     {
-        merger[i + offset] += (uint16_t)((float)mergee[i] * modifier);
+        merger.setAt(i + offset,  merger.at(i + offset) + (uint16_t)((float)mergee[i] * modifier));
     }
 }
-void makeEcho(WAVHolder& merger, WAVHolder& mergee, float delay)
+void makeEcho(Holder& merger, Holder& mergee, float delay)
 {
     mergeTwoSounds(merger, mergee, merger.getDelay(delay));
 }
-void makeTripleEcho(WAVHolder& merger, WAVHolder& mergee, float delay)
+void makeTripleEcho(Holder& merger, Holder& mergee, float delay)
 {
     mergeTwoSounds(merger, mergee, merger.getDelay(delay));
     mergeTwoSounds(merger, mergee, merger.getDelay(delay * 2));
     mergeTwoSounds(merger, mergee, merger.getDelay(delay * 3));
 }
-void makeInfiniteEcho(WAVHolder& merger, WAVHolder& mergee, float delay, float modifier)
+void makeInfiniteEcho(Holder& merger, Holder& mergee, float delay, float modifier)
 {
     for(int i = 1; i <= merger.getDuration() * 2; i++)
         mergeTwoSounds(merger, mergee, merger.getDelay(delay * i), modifier / (i + 1));
 }
 
-
-void mergeTwoSounds(RAWHolder& merger, RAWHolder& mergee, uint32_t offset, float modifier)
-{
-    uint32_t size = mergee.getSamplesNumber() < merger.getSamplesNumber() - offset ? mergee.getSamplesNumber() : merger.getSamplesNumber() - offset;
-    if (offset > merger.getSamplesNumber())
-        return;
-
-    for (uint32_t i = 0; i < size; i++)
-    {
-        merger[i + offset] += (uint16_t)((float)mergee[i] * modifier);
-    }
-
-}
-void makeEcho(RAWHolder& merger, RAWHolder& mergee, float delay)
-{
-    mergeTwoSounds(merger, mergee, merger.getDelay(delay));
-}
-void makeTripleEcho(RAWHolder& merger, RAWHolder& mergee, float delay)
-{
-    mergeTwoSounds(merger, mergee, merger.getDelay(delay));
-    mergeTwoSounds(merger, mergee, merger.getDelay(delay * 2));
-    mergeTwoSounds(merger, mergee, merger.getDelay(delay * 3));
-}
-void makeInfiniteEcho(RAWHolder& merger, RAWHolder& mergee, float delay, float modifier)
-{
-    for (int i = 1; i <= merger.getDuration() * 2; i++)
-        mergeTwoSounds(merger, mergee, merger.getDelay(delay * i), modifier / (i + 1));
-}
 
 int checkExtension(const std::string& path)
 {

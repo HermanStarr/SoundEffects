@@ -116,6 +116,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -139,27 +140,45 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Circuit\Circuit.h" />
+    <ClInclude Include="InProgramConsole\Compiled.h" />
+    <ClInclude Include="InProgramConsole\ConsoleCommands.h" />
+    <ClInclude Include="Elements\Element.h" />
+    <ClInclude Include="Elements\Delay.h" />
     <ClInclude Include="DSP.h" />
     <ClInclude Include="Effects\Effect.h" />
+    <ClInclude Include="Effects\Effects.h" />
     <ClInclude Include="Effects\ReverberationEffect.h" />
-    <ClInclude Include="Filters\AllPassFilter.h" />
-    <ClInclude Include="Filters\Filter.h" />
-    <ClInclude Include="Filters\FIRFilter.h" />
+    <ClInclude Include="Elements\Elements.h" />
+    <ClInclude Include="Elements\Filters\AllPassFilter.h" />
+    <ClInclude Include="Elements\Filters\Filters.h" />
+    <ClInclude Include="Elements\Filters\FIRFilter.h" />
     <ClInclude Include="Headers.h" />
     <ClInclude Include="Holders\Holder.h" />
+    <ClInclude Include="Holders\Holders.h" />
     <ClInclude Include="Holders\RAWHolder.h" />
     <ClInclude Include="Holders\WAVHolder.h" />
     <ClInclude Include="SoundEffectApp.h" />
+    <ClInclude Include="SoundGenerator\SoundGenerator.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Circuit\Circuit.cpp">
+      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Default</LanguageStandard>
+    </ClCompile>
+    <ClCompile Include="Elements\Delay.cpp" />
     <ClCompile Include="DSP.cpp" />
     <ClCompile Include="Effects\ReverberationEffect.cpp" />
-    <ClCompile Include="Filters\AllPassFilter.cpp" />
-    <ClCompile Include="Filters\FIRFilter.cpp" />
+    <ClCompile Include="Elements\Filters\AllPassFilter.cpp" />
+    <ClCompile Include="Elements\Filters\FIRFilter.cpp" />
     <ClCompile Include="Holders\RAWHolder.cpp" />
     <ClCompile Include="Holders\WAVHolder.cpp" />
+    <ClCompile Include="InProgramConsole\ConsoleCommands.cpp" />
     <ClCompile Include="SoundEffectApp.cpp" />
+    <ClCompile Include="SoundGenerator\SoundGenerator.cpp" />
     <ClCompile Include="Source.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Resources\Commands.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
