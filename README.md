@@ -1,7 +1,7 @@
 # SoundEffects
 
 A digital sound processing program with multiple use case possibilities:
-- reading nad writing .wav or .raw files
+- reading and writing .wav or .raw files
 - adding an envelope to a sound file
 - adding reverb effect to a sound file by simulating a circuit
 - creating an echo effect
